@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Slider
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.RadioButton
 
 
 class MainActivity : ComponentActivity() {
@@ -113,6 +115,52 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             valueRange = 0f..25f,
             steps = 24
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Скидка",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                RadioButton(
+                    selected = false,
+                    onClick = {}
+                )
+                Text("3%")
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                RadioButton(
+                    selected = false,
+                    onClick = {}
+                )
+                Text("5%")
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                RadioButton(
+                    selected = false,
+                    onClick = {}
+                )
+                Text("7%")
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                RadioButton(
+                    selected = false,
+                    onClick = {}
+                )
+                Text("10%")
+            }
+        }
     }
 }
 
