@@ -27,6 +27,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Slider
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.width
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,21 +67,39 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        OutlinedTextField(
-            value = billAmount,
-            onValueChange = { billAmount = it },
-            label = { Text("Сумма счёта") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Сумма заказа:",
+                modifier = Modifier.width(130.dp)
+            )
+
+            OutlinedTextField(
+                value = billAmount,
+                onValueChange = { billAmount = it },
+                modifier = Modifier.weight(1f),
+                singleLine = true
+            )
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        OutlinedTextField(
-            value = dishesCount,
-            onValueChange = { dishesCount = it },
-            label = { Text("Количество блюд") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Количество блюд:",
+                modifier = Modifier.width(175.dp)
+            )
+
+            OutlinedTextField(
+                value = dishesCount,
+                onValueChange = { dishesCount = it },
+                modifier = Modifier.weight(1f),
+                singleLine = true
+            )
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
