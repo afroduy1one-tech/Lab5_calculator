@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.material3.Slider
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +49,7 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     var billAmount by remember { mutableStateOf("") }
     var dishesCount by remember { mutableStateOf("") }
+    var tipPercent by remember { mutableStateOf(15f) }
 
     Column(
         modifier = Modifier.fillMaxWidth().padding(24.dp),
@@ -76,6 +78,19 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             onValueChange = { dishesCount = it },
             label = { Text("Количество блюд") },
             modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Чаевые: ${tipPercent.toInt()}%"
+        )
+
+        Slider(
+            value = tipPercent,
+            onValueChange = { tipPercent = it },
+            valueRange = 0f..25f,
+            steps = 24
         )
     }
 }
