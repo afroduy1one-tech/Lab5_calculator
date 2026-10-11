@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Slider
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.RadioButton
+import kotlin.math.roundToInt
 
 
 class MainActivity : ComponentActivity() {
@@ -55,6 +55,22 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     var billAmount by remember { mutableStateOf("") }
     var dishesCount by remember { mutableStateOf("") }
     var tipPercent by remember { mutableStateOf(15f) }
+
+    val discountPercent = when (dishesCount.toIntOrNull() ?: 0) {
+        in 1..2 -> 3
+        in 3..5 -> 5
+        in 6..10 -> 7
+        in 11..Int.MAX_VALUE -> 10
+        else -> 0
+    }
+    val originalAmount = billAmount.toDoubleOrNull() ?: 0.0
+
+    val discountedAmount = originalAmount *
+            (1 - discountPercent / 100.0)
+
+    val tipAmount = discountedAmount * tipPercent / 100
+
+    val finalAmount = discountedAmount + tipAmount
 
     Column(
         modifier = Modifier.fillMaxWidth().padding(24.dp),
@@ -106,7 +122,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Чаевые: ${tipPercent.toInt()}%"
+            text = "Чаевые: ${tipPercent.roundToInt()}%"
         )
 
         Slider(
@@ -131,7 +147,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(
-                    selected = false,
+                    selected = discountPercent == 3,
                     onClick = {}
                 )
                 Text("3%")
@@ -139,7 +155,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(
-                    selected = false,
+                    selected = discountPercent == 5,
                     onClick = {}
                 )
                 Text("5%")
@@ -147,7 +163,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(
-                    selected = false,
+                    selected = discountPercent == 7,
                     onClick = {}
                 )
                 Text("7%")
@@ -155,12 +171,33 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(
-                    selected = false,
+                    selected = discountPercent == 10,
                     onClick = {}
                 )
                 Text("10%")
             }
         }
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = "Сумма со скидкой: %.2f ₽".format(discountedAmount),
+            fontSize = 18.sp
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Чаевые: %.2f ₽".format(tipAmount),
+            fontSize = 18.sp
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Итого к оплате: %.2f ₽".format(finalAmount),
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
